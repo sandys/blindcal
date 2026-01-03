@@ -60,6 +60,15 @@ jobs:
         with:
           version: latest
 
+      - name: Cache Supabase Docker images
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/share/supabase
+          key: supabase-${{ runner.os }}-${{ hashFiles('supabase/config.toml') }}
+          restore-keys: |
+            supabase-${{ runner.os }}-
+
       - name: Start Supabase
         run: supabase start
 
@@ -88,6 +97,15 @@ jobs:
       - uses: supabase/setup-cli@v1
         with:
           version: latest
+
+      - name: Cache Supabase Docker images
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/share/supabase
+          key: supabase-${{ runner.os }}-${{ hashFiles('supabase/config.toml') }}
+          restore-keys: |
+            supabase-${{ runner.os }}-
 
       - run: pnpm install --frozen-lockfile
 
@@ -123,6 +141,15 @@ jobs:
       - uses: supabase/setup-cli@v1
         with:
           version: latest
+
+      - name: Cache Supabase Docker images
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/share/supabase
+          key: supabase-${{ runner.os }}-${{ hashFiles('supabase/config.toml') }}
+          restore-keys: |
+            supabase-${{ runner.os }}-
 
       - run: pnpm install --frozen-lockfile
 
