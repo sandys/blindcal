@@ -74,17 +74,18 @@ jobs:
         with:
           version: latest
 
-      - name: Link Supabase project
-        run: |
-          supabase init --with-intellij-settings=false --with-vscode-settings=false || true
+      - name: Init Supabase
+        run: supabase init --with-intellij-settings=false --with-vscode-settings=false || true
 
-      - name: Test migrations (up)
+      - name: Run migrations
         run: |
-          supabase db push --db-url "postgresql://postgres:postgres@localhost:54322/postgres?sslmode=disable"
+          supabase db push \
+            --db-url "postgresql://postgres:postgres@localhost:54322/postgres" \
+            --no-ssl
 
       - name: Verify schema
         run: |
-          PGPASSWORD=postgres psql -h localhost -p 54322 -U postgres -d postgres -c "\dt"
+          PGPASSWORD=postgres psql -h localhost -p 54322 -U postgres -d postgres -c "\dt public.*"
 
   test-integration:
     name: Integration Tests
@@ -116,15 +117,20 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
+      - run: pnpm install --frozen-lockfile
+
       - uses: supabase/setup-cli@v1
         with:
           version: latest
 
-      - run: pnpm install --frozen-lockfile
+      - name: Init Supabase
+        run: supabase init --with-intellij-settings=false --with-vscode-settings=false || true
 
       - name: Run migrations
         run: |
-          supabase db push --db-url "postgresql://postgres:postgres@localhost:54322/postgres?sslmode=disable"
+          supabase db push \
+            --db-url "postgresql://postgres:postgres@localhost:54322/postgres" \
+            --no-ssl
 
       - name: Run Integration Tests
         run: pnpm test:integration || echo "No integration tests yet"
