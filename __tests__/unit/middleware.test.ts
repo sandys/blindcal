@@ -130,25 +130,30 @@ describe('Auth Middleware', () => {
     })
   })
 
-  describe('Public routes', () => {
-    it('allows unauthenticated users to access public routes', async () => {
+  describe('Root path redirects', () => {
+    it('redirects unauthenticated users from / to /login', async () => {
       mockGetUser.mockResolvedValue({ data: { user: null } })
 
       const request = createRequest('/')
       const response = await updateSession(request)
 
-      expect(response.status).toBe(200)
+      expect(response.status).toBe(307)
+      expect(response.headers.get('location')).toContain('/login')
     })
 
-    it('allows authenticated users to access public routes', async () => {
+    it('redirects authenticated users from / to /dashboard', async () => {
       mockGetUser.mockResolvedValue({ data: { user: { id: 'test-user-id' } } })
 
       const request = createRequest('/')
       const response = await updateSession(request)
 
-      expect(response.status).toBe(200)
+      expect(response.status).toBe(307)
+      expect(response.headers.get('location')).toContain('/dashboard')
     })
 
+  })
+
+  describe('Public routes', () => {
     it('allows unauthenticated users to access campaign landing pages', async () => {
       mockGetUser.mockResolvedValue({ data: { user: null } })
 
