@@ -1,0 +1,27 @@
+# Docker volumes (persistent data)
+volumes/
+
+# Environment overrides (keep .env as template)
+.env.local
+.env.*.local
+
+# Docker build artifacts
+*.tar
+*.log
+
+# Secrets (if any local secrets are created)
+secrets/
+*.pem
+*.key
+*.crt
+
+# Temporary files
+tmp/
+*.tmp
+*.bak
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db

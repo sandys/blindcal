@@ -1,0 +1,24 @@
+# Docker build ignores
+node_modules
+.next
+.git
+*.md
+!README.md
+
+# Docker compose volumes (permission issues)
+deploy/docker-compose/volumes/
+
+# Test files
+__tests__
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+
+# IDE
+.vscode
+.idea
+
+# Local env
+.env.local
+.env*.local
