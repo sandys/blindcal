@@ -80,7 +80,7 @@ jobs:
 
       - name: Test migrations (up)
         run: |
-          supabase db push --db-url postgresql://postgres:postgres@localhost:54322/postgres
+          supabase db push --db-url "postgresql://postgres:postgres@localhost:54322/postgres?sslmode=disable"
 
       - name: Verify schema
         run: |
@@ -124,7 +124,7 @@ jobs:
 
       - name: Run migrations
         run: |
-          supabase db push --db-url postgresql://postgres:postgres@localhost:54322/postgres
+          supabase db push --db-url "postgresql://postgres:postgres@localhost:54322/postgres?sslmode=disable"
 
       - name: Run Integration Tests
         run: pnpm test:integration || echo "No integration tests yet"
