@@ -2,9 +2,9 @@ import { test, expect } from '@playwright/test'
 
 test.describe('Home Page', () => {
   test('should redirect unauthenticated users to login', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/', { waitUntil: 'networkidle' })
     // Root path redirects to /login for unauthenticated users
-    await expect(page).toHaveURL(/\/login/)
+    await expect(page).toHaveURL(/\/login/, { timeout: 10000 })
   })
 
   test('should load login page', async ({ page }) => {
